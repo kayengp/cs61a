@@ -41,8 +41,9 @@ def two_of_three(i, j, k):
     68
     >>> two_of_three(5, 5, 5)
     50
-    """
-    return _____
+    """ 
+    result=min(i**2+j**2,j**2+k**2,i**2+k**2)
+    
 
 def two_of_three_syntax_check():
     """Check that your two_of_three code consists of nothing but a return statement.
