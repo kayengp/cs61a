@@ -1,0 +1,8 @@
+def a_plus_abs_b(a,b):
+    if b<0:
+        result=a-b
+    else:
+        result=a+b
+    return result
+result=a_plus_abs_b(3,-5)
+print(result)

@@ -1,0 +1,6 @@
+def two_of_three(i,j,k):
+    result=min(i**2+j**2,j**2+k**2,i**2+k**2)
+    return result
+result=two_of_three(1,2,3)
+print(result)
+
