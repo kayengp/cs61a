@@ -65,12 +65,11 @@ def largest_factor(n):
     1
     """
     "*** YOUR CODE HERE ***"
-    i=2
-    result=n//i
-    while n%i==0:
-        i+=i
-        return result
-print(largest_factor(80))
+    i=n-1
+    while n%i!=0:
+        i-=1
+    return i
+print(largest_factor())
     
 
 
@@ -94,15 +93,11 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
-    arr=[]
-    while n>1:
-        arr.append(n)
+    while n!=1:
+        print(n)
         if n%2==0:
             n=n//2
         else:
-            n=3*n+1
-    else:
-        arr.append(1)
-    return arr
-result=hailstone(8)
-print(result)
+            n=n*3+1
+    print(n)
+print(hailstone())
