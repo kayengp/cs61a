@@ -69,7 +69,6 @@ def largest_factor(n):
     while n%i!=0:
         i-=1
     return i
-print(largest_factor())
     
 
 
@@ -100,4 +99,4 @@ def hailstone(n):
         else:
             n=n*3+1
     print(n)
-print(hailstone())
+
