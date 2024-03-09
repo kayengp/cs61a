@@ -17,7 +17,18 @@ def test_function(module_name, function_name, num_args, *args):
     function = getattr(module, function_name)
 
     # Split args into chunks based on num_args
-    chunked_args = [args[i:i+num_args] for i in range(0, len(args), num_args)]
+    chunked_args = []
+    for i in range(0, len(args), num_args):
+        chunk = args[i:i+num_args]
+        evaluated_chunk = []
+        for arg in chunk:
+            # If arg could be evaluate as lambda function defined in module, add lambda function in arg list
+            evaluated_arg = eval_lambda(arg, module)
+            if evaluated_arg is not None:
+                evaluated_chunk.append(evaluated_arg)
+            else:
+                evaluated_chunk.append(arg)
+        chunked_args.append(evaluated_chunk)
 
     # Call the function with the provided arguments
     for i, chunk in enumerate(chunked_args):
@@ -29,6 +40,16 @@ def test_function(module_name, function_name, num_args, *args):
         except Exception as e:
             logging.error(f"Exception occurred while calling function '{function_name}' with arguments {chunk} (call {i+1}): {e}")
 
+
+def eval_lambda(term_name, module):
+    """Evaluate a lambda function string defined in the module."""
+    try:
+        return eval(term_name, {**vars(module), '__builtins__': None})
+    except Exception as e:
+        # logging.error(f"Error evaluating lambda function '{term_name}': {e}")
+        return None
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 5:
         print("Usage: python3 test.py <module_name> <function_name> <num_args_for_each_call> <arg1> <arg2> ...")
@@ -37,6 +58,6 @@ if __name__ == "__main__":
     module_name = sys.argv[1]
     function_name = sys.argv[2]
     num_args = int(sys.argv[3])
-    args = [int(arg) for arg in sys.argv[4:]]
+    args = sys.argv[4:]
 
     test_function(module_name, function_name, num_args, *args)
