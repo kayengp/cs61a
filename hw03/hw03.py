@@ -28,6 +28,12 @@ def num_eights(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n % 10 == 8:
+        return num_eights(n // 10) + 1
+    elif n < 10:
+        return 0
+    else:
+        return num_eights(n // 10)
 
 
 def digit_distance(n):
@@ -50,6 +56,9 @@ def digit_distance(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    return abs(n % 10 - (n // 10) % 10) + digit_distance(n // 10)
 
 
 def interleaved_sum(n, odd_func, even_func):
@@ -72,6 +81,14 @@ def interleaved_sum(n, odd_func, even_func):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(k):
+        if k > n:
+            return 0
+        elif k == n:
+            return odd_func(k)
+        else:
+            return odd_func(k) + even_func(k + 1) + helper(k + 2)
+    return helper(1)
 
 
 def next_larger_coin(coin):
@@ -126,6 +143,17 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def constrained_count_small(total, largest_coin):
+        if total == 0:
+            return 1
+        if total < 0:
+            return 0
+        if largest_coin == None:
+            return 0
+        without_coin = constrained_count_small(total, next_smaller_coin(largest_coin))
+        with_coin = constrained_count_small(total - largest_coin, largest_coin)
+        return without_coin + with_coin
+    return constrained_count_small(total, 25)
 
 
 def print_move(origin, destination):
@@ -161,6 +189,13 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    if n == 1:
+        print_move(start, end)
+    else:
+        other = 6 - start - end
+        move_stack(n-1, start, other)
+        print_move(start, end)
+        move_stack(n-1, other, end)
 
 
 from operator import sub, mul
@@ -176,5 +211,5 @@ def make_anonymous_factorial():
     ...     ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    return (lambda f: f(f))(lambda f: lambda x: 1 if x == 0 else x * f(f)(x - 1))
 
