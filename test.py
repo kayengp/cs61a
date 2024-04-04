@@ -2,10 +2,6 @@
 
 import sys
 import importlib.util
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
 
 def test_function(module_name, function_name, num_args, *args):
     # Import the module dynamically
@@ -32,13 +28,13 @@ def test_function(module_name, function_name, num_args, *args):
 
     # Call the function with the provided arguments
     for i, chunk in enumerate(chunked_args):
-        logging.info(f"Calling function '{function_name}' with arguments {chunk} (call {i+1})")
+        print(f"INFO: Calling function '{function_name}' with arguments {chunk} (call {i+1})")
         try:
             result = function(*chunk)
             print(result)
             print()  # Print an empty line after each function call
         except Exception as e:
-            logging.error(f"Exception occurred while calling function '{function_name}' with arguments {chunk} (call {i+1}): {e}")
+            print(f"ERROR: Exception occurred while calling function '{function_name}' with arguments {chunk} (call {i+1}): {e}", file=sys.stderr)
 
 
 def eval_lambda(term_name, module):
