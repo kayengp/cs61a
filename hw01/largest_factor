@@ -1,8 +1,0 @@
-def largest_factor(n):
-    i=2
-    resuit=n//i
-    while n%i==0:
-        i=i+1
-    return resuit
-result=largest_factor(70)
-print(result)
